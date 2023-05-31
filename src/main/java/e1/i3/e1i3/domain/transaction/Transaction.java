@@ -24,11 +24,11 @@ public class Transaction extends BaseTime {
     @Column
     private String transactionHash;
 
-    @Column
-    private String method;
+//    @Column
+//    private String method;
 
-    @Column
-    private String activity;
+//    @Column
+//    private String activity;
 
     @Column
     private Long timeStamp;

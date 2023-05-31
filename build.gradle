@@ -39,6 +39,8 @@ dependencies {
     implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
     //web3j
     implementation 'org.web3j:core:5.0.0'
+    //json
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
 }
 
 tasks.named('test') {
