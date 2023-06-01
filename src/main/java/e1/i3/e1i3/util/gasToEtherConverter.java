@@ -5,10 +5,10 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 public class gasToEtherConverter {
 
-    public static BigDecimal convertGasToEther(String gasHex) {
-        BigInteger gasUsed = new BigInteger(gasHex.substring(2), 16);
-        BigDecimal wei = Convert.toWei(gasUsed.toString(), Convert.Unit.GWEI);
-        BigDecimal ether = Convert.fromWei(wei, Convert.Unit.ETHER);
+    public static double convertGasToEther(String gasHex) {
+        double gasUsed = new BigInteger(gasHex.substring(2), 16).doubleValue();
+        double wei = Convert.toWei(Double.toString(gasUsed), Convert.Unit.GWEI).doubleValue();
+        double ether = Convert.fromWei(BigDecimal.valueOf(wei), Convert.Unit.ETHER).doubleValue();
         return ether;
     }
 

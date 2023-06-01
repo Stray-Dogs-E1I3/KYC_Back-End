@@ -41,16 +41,18 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public void saveRecentTransactionList(String userAddress) throws IOException {
 
-        OkHttpClient client = new OkHttpClient();
 
-        Request request = new Request.Builder()
-                .url("https://web3.luniverse.io/v1/ethereum/mainnet/accounts/0xa41478514D57F828323E514dbf7D483646032f0A/transactions")
-                .get()
-                .addHeader("accept", "application/json")
-                .addHeader("Authorization", "Bearer " + token)
-                .build();
 
         try {
+            OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder()
+                    .url("https://web3.luniverse.io/v1/ethereum/mainnet/accounts/"+userAddress+"/transactions")
+                    .get()
+                    .addHeader("accept", "application/json")
+                    .addHeader("Authorization", "Bearer " + token)
+                    .build();
+
             Response response = client.newCall(request).execute();
 
             if (response.isSuccessful()) {

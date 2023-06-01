@@ -34,6 +34,5 @@ public class Transaction extends BaseTime {
     private Long timeStamp;
 
     @Column
-    private BigDecimal gasUsed;
-
+    private double gasUsed;
 }
