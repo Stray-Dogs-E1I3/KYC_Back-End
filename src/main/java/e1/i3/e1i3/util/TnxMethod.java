@@ -15,10 +15,6 @@ public class TnxMethod {
         Transaction transaction = web3.ethGetTransactionByHash(tnxHash).send().getTransaction().get();
         String inputData = transaction.getInput();
 
-        System.out.println(inputData);
-
-        if(inputData.length()<10) { return "etc";}
-
         String methodId = inputData.substring(0, 10);
 
         switch (methodId) {
