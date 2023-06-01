@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -24,14 +25,14 @@ public class Transaction extends BaseTime {
     @Column
     private String transactionHash;
 
-//    @Column
-//    private String method;
-
-//    @Column
-//    private String activity;
+    @Column
+    private String method;
 
     @Column
-    private Long timeStamp;
+    private String activity;
+
+    @Column
+    private LocalDateTime timeStamp;
 
     @Column
     private double gasUsed;

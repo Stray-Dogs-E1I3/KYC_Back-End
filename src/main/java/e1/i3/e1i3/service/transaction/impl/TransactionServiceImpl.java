@@ -3,6 +3,7 @@ package e1.i3.e1i3.service.transaction.impl;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import e1.i3.e1i3.domain.transaction.Transaction;
+import e1.i3.e1i3.dto.tnxs.DailyTnxs;
 import e1.i3.e1i3.repository.transaction.TransactionRepository;
 import e1.i3.e1i3.service.transaction.TransactionService;
 import lombok.RequiredArgsConstructor;
@@ -15,10 +16,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static e1.i3.e1i3.util.EthereumTimestampConverter.convertToDateTime;
 import static e1.i3.e1i3.util.gasToEtherConverter.convertGasToEther;
 
 @Service
@@ -79,7 +83,7 @@ public class TransactionServiceImpl implements TransactionService {
                             Transaction transaction = new Transaction();
                             transaction.setGasUsed(convertGasToEther(gasUsed));
                             transaction.setTransactionHash(transactionHash);
-                            transaction.setTimeStamp(timestamp.asLong());
+                            transaction.setTimeStamp(convertToDateTime(timestamp.asLong()));
                             transaction.setUserAddress(userAddress);
 
                             transactions.add(transaction);
@@ -98,5 +102,27 @@ public class TransactionServiceImpl implements TransactionService {
         }
 
 
+    }
+
+    @Override
+    public List<DailyTnxs> getDailyTransactionList(String userAddress, LocalDate date) {
+        LocalDateTime startDateTime = date.atStartOfDay();
+        LocalDateTime endDateTime = date.atTime(23, 59, 59);
+
+        List<Transaction> transactions = transactionRepository.findByUserAddressAndTimeStampBetween(userAddress, startDateTime, endDateTime);
+        List<DailyTnxs> dailyTransactions = new ArrayList<>();
+
+        for (Transaction transaction : transactions) {
+            DailyTnxs dailyTnxs = new DailyTnxs();
+            dailyTnxs.setTransactionHash(transaction.getTransactionHash());
+            dailyTnxs.setMethod(transaction.getMethod());
+            dailyTnxs.setActivity(transaction.getActivity());
+            dailyTnxs.setTimeStamp(transaction.getTimeStamp());
+            dailyTnxs.setGasUsed(transaction.getGasUsed());
+
+            dailyTransactions.add(dailyTnxs);
+        }
+
+        return dailyTransactions;
     }
 }
