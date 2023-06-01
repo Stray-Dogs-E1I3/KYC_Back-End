@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
-public class Transaction extends BaseTime {
+public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "transaction_id")
@@ -27,9 +27,6 @@ public class Transaction extends BaseTime {
 
     @Column
     private String method;
-
-    @Column
-    private String activity;
 
     @Column
     private LocalDateTime timeStamp;

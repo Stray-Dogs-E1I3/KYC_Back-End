@@ -24,6 +24,7 @@ import java.util.Optional;
 
 import static e1.i3.e1i3.util.EthereumTimestampConverter.convertToDateTime;
 import static e1.i3.e1i3.util.gasToEtherConverter.convertGasToEther;
+import static e1.i3.e1i3.util.TnxMethod.getTnxMethod;
 
 @Service
 @Transactional
@@ -76,7 +77,7 @@ public class TransactionServiceImpl implements TransactionService {
                     if (receiptNode != null) {
                         String gasUsed = receiptNode.get("gasUsed").asText();
                         String transactionHash = receiptNode.get("transactionHash").asText();
-
+                        String tnxMethod = getTnxMethod(transactionHash);
                         Optional<Transaction> existingTransaction = transactionRepository.findByTransactionHash(transactionHash);
 
                         if (existingTransaction.isEmpty()) {
@@ -85,7 +86,7 @@ public class TransactionServiceImpl implements TransactionService {
                             transaction.setTransactionHash(transactionHash);
                             transaction.setTimeStamp(convertToDateTime(timestamp.asLong()));
                             transaction.setUserAddress(userAddress);
-
+                            transaction.setMethod(tnxMethod);
                             transactions.add(transaction);
                         }
                     }
@@ -116,7 +117,6 @@ public class TransactionServiceImpl implements TransactionService {
             DailyTnxs dailyTnxs = new DailyTnxs();
             dailyTnxs.setTransactionHash(transaction.getTransactionHash());
             dailyTnxs.setMethod(transaction.getMethod());
-            dailyTnxs.setActivity(transaction.getActivity());
             dailyTnxs.setTimeStamp(transaction.getTimeStamp());
             dailyTnxs.setGasUsed(transaction.getGasUsed());
 
