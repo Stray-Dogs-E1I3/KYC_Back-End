@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface TransactionService {
-    public void saveRecentTransactionList(String userAddress) throws IOException;
+    public void saveRecentTransactionList(String userAddress,String protocol,String network) throws IOException;
 
     public List<DailyTnxs> getDailyTransactionList(String userAddress, LocalDate date);
     public List<CalendarResDTO> getDailyGasfeeInCalendarView(String userAddress, LocalDate date);
