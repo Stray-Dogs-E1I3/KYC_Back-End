@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -146,9 +147,14 @@ public class TransactionServiceImpl implements TransactionService {
             LocalDate entryDate = entry.getKey();
             double totalGasFee = entry.getValue();
 
+            DecimalFormat decimalFormat = new DecimalFormat("#.########"); // 소수점 이하 8자리까지 표시
+            String formattedTotalGasFee = decimalFormat.format(totalGasFee);
+            //System.out.println("totalGasFee = " + formattedTotalGasFee);
+            //double parsedTotalGasFee = Double.parseDouble(formattedTotalGasFee);
+
             CalendarResDTO calendarResDTO = new CalendarResDTO();
             calendarResDTO.setDate(entryDate);
-            calendarResDTO.setTotalGasFee(totalGasFee);
+            calendarResDTO.setTotalGasFee(formattedTotalGasFee);
             calendarResDTOs.add(calendarResDTO);
         }
 
