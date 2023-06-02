@@ -3,6 +3,7 @@ package e1.i3.e1i3.service.transaction.impl;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import e1.i3.e1i3.domain.transaction.Transaction;
+import e1.i3.e1i3.dto.tnxs.CalendarResDTO;
 import e1.i3.e1i3.dto.tnxs.DailyTnxs;
 import e1.i3.e1i3.repository.transaction.TransactionRepository;
 import e1.i3.e1i3.service.transaction.TransactionService;
@@ -18,9 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static e1.i3.e1i3.util.EthereumTimestampConverter.convertToDateTime;
 import static e1.i3.e1i3.util.gasToEtherConverter.convertGasToEther;
@@ -124,5 +123,34 @@ public class TransactionServiceImpl implements TransactionService {
         }
 
         return dailyTransactions;
+    }
+
+    @Override
+    public List<CalendarResDTO> getDailyGasfeeInCalendarView(String userAddress) {
+        List<Transaction> transactions = transactionRepository.findByUserAddress(userAddress);
+        Map<LocalDate, Double> dailyGasFees = new HashMap<>();
+
+        for (Transaction transaction : transactions) {
+            LocalDateTime timeStamp = transaction.getTimeStamp();
+            LocalDate date = timeStamp.toLocalDate();
+
+            if (date.getMonth().equals(LocalDate.now().getMonth())) {
+                double gasUsed = transaction.getGasUsed();
+                dailyGasFees.merge(date, gasUsed, Double::sum);
+            }
+        }
+
+        List<CalendarResDTO> calendarResDTOs = new ArrayList<>();
+        for (Map.Entry<LocalDate, Double> entry : dailyGasFees.entrySet()) {
+            LocalDate date = entry.getKey();
+            double totalGasFee = entry.getValue();
+
+            CalendarResDTO calendarResDTO = new CalendarResDTO();
+            calendarResDTO.setDate(date);
+            calendarResDTO.setTotalGasFee(totalGasFee);
+            calendarResDTOs.add(calendarResDTO);
+        }
+
+        return calendarResDTOs;
     }
 }

@@ -11,4 +11,6 @@ public interface TransactionRepository extends JpaRepository<Transaction,Long>,T
     Optional<Transaction> findByTransactionHash(String transactionHash);
 
     List<Transaction> findByUserAddressAndTimeStampBetween(String userAddress, LocalDateTime startDateTime, LocalDateTime endDateTime);
+
+    List<Transaction> findByUserAddress(String userAddress);
 }

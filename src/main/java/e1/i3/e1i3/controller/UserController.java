@@ -5,6 +5,7 @@ import e1.i3.e1i3.service.user.UserService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = {"http://localhost:3000"})
 public class UserController {
 
+    @Value("${SecretKey}")
+    String secretKey;
     private final UserService userService;
 
     @Autowired
@@ -36,7 +39,7 @@ public class UserController {
     private String generateToken(String address) {
         String token = Jwts.builder()
                 .setSubject(address)
-                .signWith(SignatureAlgorithm.HS512, "yourSecretKey")
+                .signWith(SignatureAlgorithm.HS512, secretKey)
                 .compact();
         return token;
     }
