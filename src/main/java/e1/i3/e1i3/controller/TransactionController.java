@@ -6,6 +6,7 @@ import e1.i3.e1i3.service.transaction.TransactionService;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +33,7 @@ public class TransactionController {
     }
 
     @GetMapping("/main/{date}")
-    public ResponseEntity<Object> getMain(HttpServletRequest request,@PathVariable LocalDate date) throws IOException {
+    public ResponseEntity<Object> getMain(HttpServletRequest request,@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) throws IOException {
         // 헤더에서 토큰 값 추출
         //String address = (Jwts.parser().setSigningKey(secretKey).parseClaimsJws((request.getHeader("Authorization")).substring(7)).getBody()).getSubject();
 
@@ -50,7 +51,7 @@ public class TransactionController {
 
     //달력view에서 특정 일을 클릭하면 반환되는 dailyTnxsList입니다.
     @GetMapping("/{date}")
-    public ResponseEntity<Object> getDailyTnxsList(HttpServletRequest request,@PathVariable LocalDate date){
+    public ResponseEntity<Object> getDailyTnxsList(HttpServletRequest request,@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd")LocalDate date){
         //요청 헤더에서 jwt를 가져와 유저의 주소를 추출합니다.
         String userAddress = (Jwts.parser().setSigningKey(secretKey).parseClaimsJws((request.getHeader("Authorization")).substring(7)).getBody()).getSubject();
 
@@ -61,7 +62,7 @@ public class TransactionController {
     }
 
     @GetMapping("/diagram/{month}")
-    public ResponseEntity<Object> getDiagram(HttpServletRequest request, @PathVariable LocalDate month) {
+    public ResponseEntity<Object> getDiagram(HttpServletRequest request, @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate month) {
 
         String userAddress = (Jwts.parser().setSigningKey(secretKey).parseClaimsJws((request.getHeader("Authorization")).substring(7)).getBody()).getSubject();
 
