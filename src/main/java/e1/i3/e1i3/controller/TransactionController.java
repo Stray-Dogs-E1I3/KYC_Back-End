@@ -35,16 +35,16 @@ public class TransactionController {
     @GetMapping("/main/{date}")
     public ResponseEntity<Object> getMain(HttpServletRequest request,@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) throws IOException {
         // 헤더에서 토큰 값 추출
-        //String address = (Jwts.parser().setSigningKey(secretKey).parseClaimsJws((request.getHeader("Authorization")).substring(7)).getBody()).getSubject();
+        String userAddress = (Jwts.parser().setSigningKey(secretKey).parseClaimsJws((request.getHeader("Authorization")).substring(7)).getBody()).getSubject();
 
         //사용자의 트랜잭션을 luniverse api 호출을 통해 db에 저장합니다.
-        transactionService.saveRecentTransactionList("0xa41478514D57F828323E514dbf7D483646032f0A");
+        transactionService.saveRecentTransactionList(userAddress);
 
         //사용자의 월별통계에 들어갈 정보를 반환합니다.
 
         Map<String,Object> response=new HashMap<>();
         //사용자의 달력에 노출될 정보를 반환합니다.
-        response.put("DailyGasfeeInCalendar",transactionService.getDailyGasfeeInCalendarView("0xa41478514D57F828323E514dbf7D483646032f0A",date));
+        response.put("DailyGasfeeInCalendar",transactionService.getDailyGasfeeInCalendarView(userAddress,date));
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

@@ -149,8 +149,6 @@ public class TransactionServiceImpl implements TransactionService {
 
             DecimalFormat decimalFormat = new DecimalFormat("#.########"); // 소수점 이하 8자리까지 표시
             String formattedTotalGasFee = decimalFormat.format(totalGasFee);
-            //System.out.println("totalGasFee = " + formattedTotalGasFee);
-            //double parsedTotalGasFee = Double.parseDouble(formattedTotalGasFee);
 
             CalendarResDTO calendarResDTO = new CalendarResDTO();
             calendarResDTO.setDate(entryDate);
