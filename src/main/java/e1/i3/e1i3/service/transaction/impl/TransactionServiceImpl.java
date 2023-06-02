@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import e1.i3.e1i3.domain.transaction.Transaction;
 import e1.i3.e1i3.dto.tnxs.CalendarResDTO;
 import e1.i3.e1i3.dto.tnxs.DailyTnxs;
+import e1.i3.e1i3.dto.tnxs.Diagram;
 import e1.i3.e1i3.repository.transaction.TransactionRepository;
 import e1.i3.e1i3.service.transaction.TransactionService;
 import lombok.RequiredArgsConstructor;
@@ -152,5 +153,22 @@ public class TransactionServiceImpl implements TransactionService {
         }
 
         return calendarResDTOs;
+    }
+
+    @Override
+    public Diagram getDiagram(String userAddress, LocalDate date) {
+
+        Diagram diagram = new Diagram();
+
+        diagram.setTransfer(transactionRepository.getCountTransactionsMethod(userAddress, "Transfer",date));
+        diagram.setApprove(transactionRepository.getCountTransactionsMethod(userAddress, "Approve",date));
+        diagram.setExecute(transactionRepository.getCountTransactionsMethod(userAddress, "Execute",date));
+        diagram.setSwap(transactionRepository.getCountTransactionsMethod(userAddress, "Swap",date));
+        diagram.setWithdraw(transactionRepository.getCountTransactionsMethod(userAddress, "Withdraw",date));
+        diagram.setDeposit(transactionRepository.getCountTransactionsMethod(userAddress, "Deposit",date));
+        diagram.setEtc(transactionRepository.getCountTransactionsMethod(userAddress, "etc",date));
+        diagram.setTot(transactionRepository.getTotTransactionsMethod(userAddress,date));
+
+        return diagram;
     }
 }

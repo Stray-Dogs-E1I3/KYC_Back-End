@@ -1,6 +1,7 @@
 package e1.i3.e1i3.controller;
 
 import e1.i3.e1i3.dto.tnxs.DailyTnxs;
+import e1.i3.e1i3.dto.tnxs.Diagram;
 import e1.i3.e1i3.service.transaction.TransactionService;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,16 @@ public class TransactionController {
         response.put("DailyTnxsList",transactionService.getDailyTransactionList(userAddress,date));
 
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/diagram/{month}")
+    public ResponseEntity<Object> getDiagram(HttpServletRequest request, @PathVariable LocalDate month) {
+
+        String userAddress = (Jwts.parser().setSigningKey(secretKey).parseClaimsJws((request.getHeader("Authorization")).substring(7)).getBody()).getSubject();
+
+        Diagram diagram = transactionService.getDiagram(userAddress, month);
+
+        return ResponseEntity.ok().body(diagram);
     }
 
 
