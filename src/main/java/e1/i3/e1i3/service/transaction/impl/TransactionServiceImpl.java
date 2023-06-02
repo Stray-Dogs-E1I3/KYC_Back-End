@@ -52,7 +52,7 @@ public class TransactionServiceImpl implements TransactionService {
             OkHttpClient client = new OkHttpClient();
 
             Request request = new Request.Builder()
-                    .url("https://web3.luniverse.io/v1/ethereum/mainnet/accounts/"+userAddress+"/transactions")
+                    .url("https://web3.luniverse.io/v1/ethereum/mainnet/accounts/"+userAddress+"/transactions?rpp=50")
                     .get()
                     .addHeader("accept", "application/json")
                     .addHeader("Authorization", "Bearer " + token)
@@ -127,27 +127,27 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public List<CalendarResDTO> getDailyGasfeeInCalendarView(String userAddress) {
+    public List<CalendarResDTO> getDailyGasfeeInCalendarView(String userAddress, LocalDate date) {
         List<Transaction> transactions = transactionRepository.findByUserAddress(userAddress);
         Map<LocalDate, Double> dailyGasFees = new HashMap<>();
 
         for (Transaction transaction : transactions) {
             LocalDateTime timeStamp = transaction.getTimeStamp();
-            LocalDate date = timeStamp.toLocalDate();
+            LocalDate transactionDate = timeStamp.toLocalDate();
 
-            if (date.getMonth().equals(LocalDate.now().getMonth())) {
+            if (transactionDate.getMonth().equals(date.getMonth()) && transactionDate.getYear() == date.getYear()) {
                 double gasUsed = transaction.getGasUsed();
-                dailyGasFees.merge(date, gasUsed, Double::sum);
+                dailyGasFees.merge(transactionDate, gasUsed, Double::sum);
             }
         }
 
         List<CalendarResDTO> calendarResDTOs = new ArrayList<>();
         for (Map.Entry<LocalDate, Double> entry : dailyGasFees.entrySet()) {
-            LocalDate date = entry.getKey();
+            LocalDate entryDate = entry.getKey();
             double totalGasFee = entry.getValue();
 
             CalendarResDTO calendarResDTO = new CalendarResDTO();
-            calendarResDTO.setDate(date);
+            calendarResDTO.setDate(entryDate);
             calendarResDTO.setTotalGasFee(totalGasFee);
             calendarResDTOs.add(calendarResDTO);
         }

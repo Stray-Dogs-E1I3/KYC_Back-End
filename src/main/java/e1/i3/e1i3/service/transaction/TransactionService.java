@@ -12,7 +12,7 @@ public interface TransactionService {
     public void saveRecentTransactionList(String userAddress) throws IOException;
 
     public List<DailyTnxs> getDailyTransactionList(String userAddress, LocalDate date);
-    public List<CalendarResDTO> getDailyGasfeeInCalendarView(String userAddress);
+    public List<CalendarResDTO> getDailyGasfeeInCalendarView(String userAddress, LocalDate date);
 
     public Diagram getDiagram(String userAddress, LocalDate date);
 }

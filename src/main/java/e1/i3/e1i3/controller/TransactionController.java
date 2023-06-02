@@ -31,8 +31,8 @@ public class TransactionController {
         this.transactionService = transactionService;
     }
 
-    @GetMapping("/main")
-    public ResponseEntity<Object> getMain(HttpServletRequest request) throws IOException {
+    @GetMapping("/main/{date}")
+    public ResponseEntity<Object> getMain(HttpServletRequest request,@PathVariable LocalDate date) throws IOException {
         // 헤더에서 토큰 값 추출
         //String address = (Jwts.parser().setSigningKey(secretKey).parseClaimsJws((request.getHeader("Authorization")).substring(7)).getBody()).getSubject();
 
@@ -43,7 +43,7 @@ public class TransactionController {
 
         Map<String,Object> response=new HashMap<>();
         //사용자의 달력에 노출될 정보를 반환합니다.
-        response.put("DailyGasfeeInCalendar",transactionService.getDailyGasfeeInCalendarView("0xa41478514D57F828323E514dbf7D483646032f0A"));
+        response.put("DailyGasfeeInCalendar",transactionService.getDailyGasfeeInCalendarView("0xa41478514D57F828323E514dbf7D483646032f0A",date));
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
