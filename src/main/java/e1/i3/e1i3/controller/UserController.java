@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("/api/user")
 @CrossOrigin(origins = {"http://localhost:3000"})
@@ -26,7 +28,7 @@ public class UserController {
 
     //유저가 지갑로그인을 하면 JWT토큰을 반환합니다.
     @PostMapping(value = "/login")
-    public ResponseEntity<String> login(@RequestBody UserLoginReqDTO userLoginReqDTO){
+    public ResponseEntity<String> login(@RequestBody UserLoginReqDTO userLoginReqDTO) throws IOException, InterruptedException {
         String address=userLoginReqDTO.getUserAddress();
 
         //db에 저장

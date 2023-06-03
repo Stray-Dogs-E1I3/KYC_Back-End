@@ -24,6 +24,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 import static e1.i3.e1i3.util.EthereumTimestampConverter.convertToDateTime;
+import static e1.i3.e1i3.util.createAuth.createToken;
 import static e1.i3.e1i3.util.gasToEtherConverter.convertGasToEther;
 import static e1.i3.e1i3.util.TnxMethod.getTnxMethod;
 
@@ -31,14 +32,26 @@ import static e1.i3.e1i3.util.TnxMethod.getTnxMethod;
 @Transactional
 @RequiredArgsConstructor
 public class TransactionServiceImpl implements TransactionService {
-    @Value("${polygonAuthToken}") // 변수 파일에 등록된 java.file.test 값 가져오기
-    String polygonAuthToken;
 
-    @Value("${ethereumAuthToken}")
-    String ethereumAuthToken;
+    @Value("${ethereum-NODE-ID}")
+    String etherNode;
+
+    @Value("${ethereum-Key-ID}")
+    String etherKey;
+
+    @Value("${ethereum-Key-Secret}")
+    String etherSecret;
+
+    @Value("${polygon-NODE-ID}")
+    String polygonNode;
+
+    @Value("${polygon-Key-ID}")
+    String polygonKey;
+
+    @Value("${polygon-Key-Secret}")
+    String polygonSecret;
 
     String Token;
-
 
     @Autowired
     private TransactionRepository transactionRepository;
@@ -51,14 +64,14 @@ public class TransactionServiceImpl implements TransactionService {
     // 해당 값 사이에 있는 정보들만 반환 할 수 있게 코드를 짜자.
     //2.회원가입이후 정보만 저장할 수 있게끔 로직 추가.
     @Override
-    public void saveRecentTransactionList(String userAddress,String protocol,String network) throws IOException {
+    public void saveRecentTransactionList(String userAddress,String protocol,String network) throws IOException, InterruptedException {
 
 
         if(protocol.equals("ethereum")) {
-            Token = ethereumAuthToken;
+            Token = createToken(etherNode,etherKey,etherSecret);
         }
         else if(protocol.equals("polygon")){
-            Token = polygonAuthToken;
+            Token = createToken(polygonNode,polygonKey,polygonSecret);
         }
 
         try {

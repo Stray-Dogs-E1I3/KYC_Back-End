@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface TransactionService {
-    public void saveRecentTransactionList(String userAddress,String protocol,String network) throws IOException;
+    public void saveRecentTransactionList(String userAddress,String protocol,String network) throws IOException, InterruptedException;
 
     public void saveRecentTransaction(Object eventData) throws IOException;
 
