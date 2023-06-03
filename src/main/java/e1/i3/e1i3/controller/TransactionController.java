@@ -38,7 +38,8 @@ public class TransactionController {
         String userAddress = (Jwts.parser().setSigningKey(secretKey).parseClaimsJws((request.getHeader("Authorization")).substring(7)).getBody()).getSubject();
 
         //사용자의 트랜잭션을 luniverse api 호출을 통해 db에 저장합니다.
-        transactionService.saveRecentTransactionList(userAddress);
+        transactionService.saveRecentTransactionList(userAddress,"ethereum","sepolia");
+        transactionService.saveRecentTransactionList(userAddress,"polygon","mumbai");
 
 
         Map<String,Object> response=new HashMap<>();
@@ -50,7 +51,7 @@ public class TransactionController {
     }
 
     //달력view에서 특정 일을 클릭하면 반환되는 dailyTnxsList입니다.
-    @GetMapping("/{date}")
+    @GetMapping("/daily/{date}")
     public ResponseEntity<Object> getDailyTnxsList(HttpServletRequest request,@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd")LocalDate date){
         //요청 헤더에서 jwt를 가져와 유저의 주소를 추출합니다.
         String userAddress = (Jwts.parser().setSigningKey(secretKey).parseClaimsJws((request.getHeader("Authorization")).substring(7)).getBody()).getSubject();
@@ -61,6 +62,7 @@ public class TransactionController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    //사용자의 월별통계(다이어그램)에 들어갈 정보를 반환합니다.
     @GetMapping("/diagram/{month}")
     public ResponseEntity<Object> getDiagram(HttpServletRequest request, @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate month) {
 

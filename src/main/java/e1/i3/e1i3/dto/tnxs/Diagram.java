@@ -11,13 +11,15 @@ public class Diagram {
 
     private Long Approve ;
 
-    private Long Execute ;
+    private Long Entry ;
 
     private Long Swap ;
 
     private Long Withdraw ;
 
-    private Long Deposit ;
+    private Long Defi ;
+
+    private Long Nft ;
 
     private Long Etc ;
 
