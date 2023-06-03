@@ -1,5 +1,6 @@
 package e1.i3.e1i3.controller;
 
+import e1.i3.e1i3.domain.user.User;
 import e1.i3.e1i3.dto.user.UserLoginReqDTO;
 import e1.i3.e1i3.service.user.UserService;
 import io.jsonwebtoken.Jwts;
@@ -30,7 +31,10 @@ public class UserController {
 
         //db에 저장
         userService.login(address);
+
         String token = generateToken(userLoginReqDTO.getUserAddress());
+
+
         return ResponseEntity.ok().body(token);
     }
 

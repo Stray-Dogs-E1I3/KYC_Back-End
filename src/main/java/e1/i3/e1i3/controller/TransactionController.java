@@ -37,11 +37,6 @@ public class TransactionController {
         // 헤더에서 토큰 값 추출
         String userAddress = (Jwts.parser().setSigningKey(secretKey).parseClaimsJws((request.getHeader("Authorization")).substring(7)).getBody()).getSubject();
 
-        //사용자의 트랜잭션을 luniverse api 호출을 통해 db에 저장합니다.
-        transactionService.saveRecentTransactionList(userAddress,"ethereum","sepolia");
-        transactionService.saveRecentTransactionList(userAddress,"polygon","mumbai");
-
-
         Map<String,Object> response=new HashMap<>();
         //사용자의 달력에 노출될 정보를 반환합니다.
         response.put("DailyGasfeeInCalendar",transactionService.getDailyGasfeeInCalendarView(userAddress,date));

@@ -29,7 +29,7 @@ public class createWebhook {
                     .build();
 
             Response response = client.newCall(request).execute();
-            System.out.println("Response: "+response);
+            
         }catch (Exception e){
             e.printStackTrace();
         }
