@@ -40,12 +40,12 @@ public class TransactionController {
         //사용자의 트랜잭션을 luniverse api 호출을 통해 db에 저장합니다.
         transactionService.saveRecentTransactionList(userAddress);
 
-        //사용자의 월별통계에 들어갈 정보를 반환합니다.
 
         Map<String,Object> response=new HashMap<>();
         //사용자의 달력에 노출될 정보를 반환합니다.
         response.put("DailyGasfeeInCalendar",transactionService.getDailyGasfeeInCalendarView(userAddress,date));
-
+        //사용자의 월별통계에 들어갈 정보를 반환합니다.
+        response.put("Diagram",transactionService.getDiagram(userAddress,date));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
