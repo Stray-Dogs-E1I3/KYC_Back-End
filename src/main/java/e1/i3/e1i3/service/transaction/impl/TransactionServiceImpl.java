@@ -160,13 +160,15 @@ public class TransactionServiceImpl implements TransactionService {
         List<Transaction> transactions = transactionRepository.findByUserAddressAndTimeStampBetween(userAddress, startDateTime, endDateTime);
         List<DailyTnxs> dailyTransactions = new ArrayList<>();
 
+        DecimalFormat decimalFormat = new DecimalFormat("#.#######"); // 소수점 이하 7자리까지 표시
+
         for (Transaction transaction : transactions) {
             DailyTnxs dailyTnxs = new DailyTnxs();
             dailyTnxs.setTransactionHash(transaction.getTransactionHash());
             dailyTnxs.setMethod(transaction.getMethod());
             dailyTnxs.setTimeStamp(transaction.getTimeStamp());
-            dailyTnxs.setGasUsed(transaction.getGasUsed());
 
+            dailyTnxs.setGasUsed(decimalFormat.format(transaction.getGasUsed()));
             dailyTransactions.add(dailyTnxs);
         }
 

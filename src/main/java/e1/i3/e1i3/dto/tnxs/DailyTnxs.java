@@ -16,5 +16,5 @@ public class DailyTnxs {
 
     private LocalDateTime timeStamp;
 
-    private double gasUsed;
+    private String gasUsed;
 }
