@@ -11,7 +11,7 @@ public class gasToEtherConverter {
         double gasUsed = new BigInteger(gasHex.substring(2), 16).doubleValue();
         double wei = Convert.toWei(Double.toString(gasUsed), Convert.Unit.GWEI).doubleValue();
         double ether = Convert.fromWei(BigDecimal.valueOf(wei), Convert.Unit.ETHER).doubleValue();
-        DecimalFormat decimalFormat = new DecimalFormat("#.########"); // 소수점 이하 8자리까지 표시
+        DecimalFormat decimalFormat = new DecimalFormat("#.#######"); // 소수점 이하 7자리까지 표시
         return Double.parseDouble(decimalFormat.format(ether));
     }
 

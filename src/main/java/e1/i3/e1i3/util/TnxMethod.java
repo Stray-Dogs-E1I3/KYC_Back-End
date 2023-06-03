@@ -13,10 +13,10 @@ public class TnxMethod {
     //트랜잭션 methodID를 통해 type 분류
     public static String getTnxMethod(String tnxHash, String protocol) throws IOException {
 
-        if(protocol.equals("ethereum")) {
+        if(protocol.equalsIgnoreCase("ethereum")) {
             web3 = Web3j.build(new HttpService("https://ethereum-sepolia.luniverse.io/1685726982179085997"));
         }
-        else if(protocol.equals("polygon")) {
+        else if(protocol.equalsIgnoreCase("polygon")) {
             web3 = Web3j.build(new HttpService("https://polygon-mumbai.luniverse.io/1684984631913669590"));
         }
 

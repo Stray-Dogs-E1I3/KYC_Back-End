@@ -119,6 +119,40 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
+    public void saveRecentTransaction(Object eventData) throws IOException {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        JsonNode rootNode = objectMapper.valueToTree(eventData);
+
+        JsonNode eventNode = rootNode.get("event");
+        String protocol = rootNode.get("protocol").asText();
+        JsonNode messageNode = eventNode.get("message");
+        String userAddress = eventNode.get("targetAddress").asText();
+
+        if (messageNode != null) {
+            String transactionHash = messageNode.get("hash").asText();
+            String gasUsed = messageNode.get("receipt_gas_used").asText();
+            Long timestamp = messageNode.get("block_timestamp").asLong();
+            String tnxMethod = getTnxMethod(transactionHash,protocol);
+
+
+            Optional<Transaction> existingTransaction = transactionRepository.findByTransactionHash(transactionHash);
+
+            if (existingTransaction.isEmpty()) {
+                Transaction transaction = new Transaction();
+                transaction.setGasUsed(convertGasToEther(gasUsed));
+                transaction.setTransactionHash(transactionHash);
+                transaction.setTimeStamp(convertToDateTime(timestamp));
+                transaction.setUserAddress(userAddress);
+                transaction.setMethod(tnxMethod);
+                transactionRepository.save(transaction);
+            }
+        }
+
+    }
+
+    @Override
     public List<DailyTnxs> getDailyTransactionList(String userAddress, LocalDate date) {
         LocalDateTime startDateTime = date.atStartOfDay();
         LocalDateTime endDateTime = date.atTime(23, 59, 59);
