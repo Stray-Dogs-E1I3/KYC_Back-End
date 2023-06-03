@@ -47,6 +47,7 @@ public class TransactionController {
         response.put("DailyGasfeeInCalendar",transactionService.getDailyGasfeeInCalendarView(userAddress,date));
         //사용자의 월별통계에 들어갈 정보를 반환합니다.
         response.put("Diagram",transactionService.getDiagram(userAddress,date));
+
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -60,17 +61,6 @@ public class TransactionController {
         response.put("DailyTnxsList",transactionService.getDailyTransactionList(userAddress,date));
 
         return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
-    //사용자의 월별통계(다이어그램)에 들어갈 정보를 반환합니다.
-    @GetMapping("/diagram/{month}")
-    public ResponseEntity<Object> getDiagram(HttpServletRequest request, @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate month) {
-
-        String userAddress = (Jwts.parser().setSigningKey(secretKey).parseClaimsJws((request.getHeader("Authorization")).substring(7)).getBody()).getSubject();
-
-        Diagram diagram = transactionService.getDiagram(userAddress, month);
-
-        return ResponseEntity.ok().body(diagram);
     }
 
 
