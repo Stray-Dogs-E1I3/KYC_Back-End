@@ -193,7 +193,7 @@ public class TransactionServiceImpl implements TransactionService {
             LocalDate entryDate = entry.getKey();
             double totalGasFee = entry.getValue();
 
-            DecimalFormat decimalFormat = new DecimalFormat("#.########"); // 소수점 이하 8자리까지 표시
+            DecimalFormat decimalFormat = new DecimalFormat("#.#######"); // 소수점 이하 7자리까지 표시
             String formattedTotalGasFee = decimalFormat.format(totalGasFee);
 
             CalendarResDTO calendarResDTO = new CalendarResDTO();
