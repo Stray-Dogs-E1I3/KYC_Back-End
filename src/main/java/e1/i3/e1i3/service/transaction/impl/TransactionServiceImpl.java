@@ -215,7 +215,7 @@ public class TransactionServiceImpl implements TransactionService {
 
             CalendarResDTO calendarResDTO = new CalendarResDTO();
             calendarResDTO.setDate(entryDate);
-            calendarResDTO.setTotalGasFee(formattedTotalGasFee);
+            calendarResDTO.setTitle(formattedTotalGasFee);
             calendarResDTOs.add(calendarResDTO);
         }
 
@@ -237,7 +237,6 @@ public class TransactionServiceImpl implements TransactionService {
         diagram.setDefi(transactionRepository.getCountTransactionsMethod(userAddress,"Defi",date));
         diagram.setNft(transactionRepository.getCountTransactionsMethod(userAddress,"Nft",date));
         diagram.setEtc(transactionRepository.getCountTransactionsMethod(userAddress, "etc",date));
-        diagram.setTot(transactionRepository.getTotTransactionsMethod(userAddress,date));
 
         return diagram;
     }

@@ -23,5 +23,4 @@ public class Diagram {
 
     private Long Etc ;
 
-    private Long tot;
 }

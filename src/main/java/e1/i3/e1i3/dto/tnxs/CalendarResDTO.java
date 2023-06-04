@@ -9,6 +9,6 @@ import java.time.LocalDate;
 public class CalendarResDTO {
 
     LocalDate date;
-    String totalGasFee;
+    String title;
 
 }
