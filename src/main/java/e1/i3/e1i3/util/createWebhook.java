@@ -1,7 +1,6 @@
 package e1.i3.e1i3.util;
 
 import okhttp3.*;
-import org.springframework.beans.factory.annotation.Value;
 
 public class createWebhook {
     static String protocolurl;

@@ -46,8 +46,9 @@ public class UserServiceImpl implements UserService {
     private static final String ETHEREUM = "ethereum";
     private static final String POLYGON = "polygon";
     @Override
-    public void login(String userAddress) throws IOException, InterruptedException {
+    public void login(String userAddress)  {
 
+        // 사용자 지갑주소를 db와 비교하여 신규 사용자의 경우 db에 저장합니다
         userRepository.findByAddress(userAddress)
                 .orElseGet(() -> {
                     User newUser = new User();
@@ -55,32 +56,16 @@ public class UserServiceImpl implements UserService {
                     // Perform any other necessary initialization for the new user
                     userRepository.save(newUser);
 
-                    //사용자의 트랜잭션을 luniverse api 호출을 통해 db에 저장합니다.
-                    try {
-                        transactionService.saveRecentTransactionList(userAddress,ETHEREUM,"sepolia");
-                    } catch (IOException | InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                    try {
-                        transactionService.saveRecentTransactionList(userAddress,POLYGON,"mumbai");
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
 
                     try {
+                        //사용자의 트랜잭션을 luniverse api 호출을 통해 db에 저장합니다.
+                        transactionService.saveRecentTransactionList(userAddress,ETHEREUM,"sepolia");
+                        transactionService.saveRecentTransactionList(userAddress,POLYGON,"mumbai");
+
+                        //사용자의 지갑 주소를 통해 luniverse createWebhook api를 호출하여 webhook을 생성합니다.
                         createWebhook(userAddress,ETHEREUM,createToken(etherNode,etherKey,etherSecret));
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                    try {
                         createWebhook(userAddress,POLYGON,createToken(polygonNode,polygonKey,polygonSecret));
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    } catch (InterruptedException e) {
+                    } catch (IOException | InterruptedException e) {
                         throw new RuntimeException(e);
                     }
 

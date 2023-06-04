@@ -36,7 +36,7 @@ public class createAuth {
 
         }
         else{
-            System.out.println("실패함");
+            System.out.println("failed to access token");
         }
 
         return token;
