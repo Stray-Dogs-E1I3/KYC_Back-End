@@ -25,7 +25,6 @@ public class createAuth {
                 .method("POST", HttpRequest.BodyPublishers.noBody())
                 .build();
         HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-        System.out.println(response.body());
 
         if (response != null) {
             String responseBody = response.body();

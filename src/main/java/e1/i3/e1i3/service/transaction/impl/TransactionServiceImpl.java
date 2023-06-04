@@ -134,6 +134,8 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public void saveRecentTransaction(Object eventData) throws IOException {
 
+        //webhook으로 받은 트랜잭션 정보를 db에 저장
+
         ObjectMapper objectMapper = new ObjectMapper();
 
         JsonNode rootNode = objectMapper.valueToTree(eventData);
@@ -222,6 +224,8 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public Diagram getDiagram(String userAddress, LocalDate date) {
+
+        // 원형통계에 들어갈 데이터 가공
 
         Diagram diagram = new Diagram();
 

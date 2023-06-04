@@ -20,7 +20,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/transaction")
-@CrossOrigin(origins = {"http://localhost:3000"})
+@CrossOrigin(origins = "*")
 public class TransactionController {
 
     @Value("${SecretKey}")

@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
                 .orElseGet(() -> {
                     User newUser = new User();
                     newUser.setAddress(userAddress);
-                    // Perform any other necessary initialization for the new user
+
                     userRepository.save(newUser);
 
 
