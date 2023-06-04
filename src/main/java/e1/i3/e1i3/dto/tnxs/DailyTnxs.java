@@ -12,6 +12,8 @@ public class DailyTnxs {
 
     private String method;
 
+    private String protocol;
+
     private LocalDateTime timeStamp;
 
     private String gasUsed;

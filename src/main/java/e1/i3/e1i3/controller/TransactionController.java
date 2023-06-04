@@ -39,7 +39,7 @@ public class TransactionController {
 
         Map<String,Object> response=new HashMap<>();
         //사용자의 달력에 노출될 정보를 반환합니다.
-        response.put("DailyGasfeeInCalendar",transactionService.getDailyGasfeeInCalendarView(userAddress,date));
+        response.put("DailyGasfeeInCalendar",transactionService.getDailyGasfeeInCalendarView(userAddress));
         //사용자의 월별통계에 들어갈 정보를 반환합니다.
         response.put("Diagram",transactionService.getDiagram(userAddress,date));
 

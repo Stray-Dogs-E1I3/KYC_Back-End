@@ -113,6 +113,7 @@ public class TransactionServiceImpl implements TransactionService {
                             transaction.setTimeStamp(convertToDateTime(timestamp.asLong()));
                             transaction.setUserAddress(userAddress);
                             transaction.setMethod(tnxMethod);
+                            transaction.setProtocol(protocol);
                             transactions.add(transaction);
                         }
                     }
@@ -161,6 +162,7 @@ public class TransactionServiceImpl implements TransactionService {
                 transaction.setTimeStamp(convertToDateTime(timestamp));
                 transaction.setUserAddress(userAddress);
                 transaction.setMethod(tnxMethod);
+                transaction.setProtocol(protocol.toLowerCase());
                 transactionRepository.save(transaction);
             }
         }
@@ -182,7 +184,7 @@ public class TransactionServiceImpl implements TransactionService {
             dailyTnxs.setTransactionHash(transaction.getTransactionHash());
             dailyTnxs.setMethod(transaction.getMethod());
             dailyTnxs.setTimeStamp(transaction.getTimeStamp());
-
+            dailyTnxs.setProtocol(transaction.getProtocol());
             dailyTnxs.setGasUsed(decimalFormat.format(transaction.getGasUsed()));
             dailyTransactions.add(dailyTnxs);
         }
@@ -191,7 +193,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public List<CalendarResDTO> getDailyGasfeeInCalendarView(String userAddress, LocalDate date) {
+    public List<CalendarResDTO> getDailyGasfeeInCalendarView(String userAddress) {
         List<Transaction> transactions = transactionRepository.findByUserAddress(userAddress);
         Map<LocalDate, Double> dailyGasFees = new HashMap<>();
 
@@ -199,10 +201,8 @@ public class TransactionServiceImpl implements TransactionService {
             LocalDateTime timeStamp = transaction.getTimeStamp();
             LocalDate transactionDate = timeStamp.toLocalDate();
 
-            if (transactionDate.getMonth().equals(date.getMonth()) && transactionDate.getYear() == date.getYear()) {
-                double gasUsed = transaction.getGasUsed();
-                dailyGasFees.merge(transactionDate, gasUsed, Double::sum);
-            }
+            double gasUsed = transaction.getGasUsed();
+            dailyGasFees.merge(transactionDate, gasUsed, Double::sum);
         }
 
         List<CalendarResDTO> calendarResDTOs = new ArrayList<>();

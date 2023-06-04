@@ -29,6 +29,9 @@ public class Transaction {
     private String method;
 
     @Column
+    private String protocol;
+
+    @Column
     private LocalDateTime timeStamp;
 
     @Column
