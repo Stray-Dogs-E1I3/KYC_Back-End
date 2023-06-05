@@ -1,5 +1,5 @@
 # KYC
-<h2>💎Project Overview</h2>
+**<h2>💎Project Overview</h2>**
 
  The household book service allows users to link to their Ethereum and polygon network addresses to record and track gas fees incurred when performing transactions. This allows users to see the cost of gas for each transaction they perform in real time, which helps them optimize costs and manage assets efficiently. In addition, the household book service provides the ability to store transaction content and gas costs and look them up later. This allows users to effectively manage and analyze their transaction history.
 
@@ -66,3 +66,4 @@ After testing with hardhat, the contract was deployed to the Polygon Mumbai netw
 - Front-End Developer : PARK JUN HYUK
 - Back-End Developer : JUNG HYUN WOO, KIM HYUNG CHAN
 - Smartcontract : CHOI HYUN SEOK
+
