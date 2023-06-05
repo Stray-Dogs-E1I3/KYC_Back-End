@@ -27,7 +27,7 @@ The following is a description of the features that we implemented:
 2. **Gas Usage Calendar**: The Household Book Service includes a calendar function. The calendar allows users to see the total amount of gas used per day by day. In addition, clicking on a specific date allows users to view a list of all transactions that occurred on that date, so that they can get a detailed history of gas usage.
 
 <br />
-<h2>📺User Flow</h2>
+**<h2>📺User Flow</h2>**
 ![가계부](https://github.com/Stray-Dogs-E1I3/KYC_Back_End/assets/84958769/c804cdb7-8ca7-454c-ae70-1d91e130e59c)
 
 <br />
