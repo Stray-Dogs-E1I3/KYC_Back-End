@@ -28,7 +28,7 @@ The following is a description of the features that we implemented:
 
 <br />
 <h2>📺User Flow</h2>
-![가계부](https://github.com/Stray-Dogs-E1I3/KYC_Back_End/assets/84958769/c804cdb7-8ca7-454c-ae70-1d91e130e59c)
+![가계부](https://github.com/Stray-Dogs-E1I3/KYC_Back_End/assets/84958769/3640f98d-9df3-4f22-926f-7003772e0b19)
 
 <br />
 <h2>📚Used Luniverse Tool</h2>
