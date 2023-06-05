@@ -1,9 +1,5 @@
 # KYC
-**<h2>📺User Flow</h2>**
-![가계부](https://github.com/Stray-Dogs-E1I3/KYC_Back_End/assets/84958769/c804cdb7-8ca7-454c-ae70-1d91e130e59c)
-
-<br />
-**<h2>💎Project Overview</h2>**
+<h2>💎Project Overview</h2>
 
  The household book service allows users to link to their Ethereum and polygon network addresses to record and track gas fees incurred when performing transactions. This allows users to see the cost of gas for each transaction they perform in real time, which helps them optimize costs and manage assets efficiently. In addition, the household book service provides the ability to store transaction content and gas costs and look them up later. This allows users to effectively manage and analyze their transaction history.
 
@@ -29,6 +25,10 @@ The following is a description of the features that we implemented:
 
 1. **Gas Fee Circular Statistics Table**: The Household Book Service analyzes a user's transaction method (transfer, swap, probe, etc.) and presents the total amount of gas fees used by a specific user in the month as a circular statistics table. This allows users to compare gas costs for each type of transaction and manage costs efficiently.
 2. **Gas Usage Calendar**: The Household Book Service includes a calendar function. The calendar allows users to see the total amount of gas used per day by day. In addition, clicking on a specific date allows users to view a list of all transactions that occurred on that date, so that they can get a detailed history of gas usage.
+
+<br />
+<h2>📺User Flow</h2>
+![가계부](https://github.com/Stray-Dogs-E1I3/KYC_Back_End/assets/84958769/c804cdb7-8ca7-454c-ae70-1d91e130e59c)
 
 <br />
 <h2>📚Used Luniverse Tool</h2>
