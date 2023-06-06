@@ -58,7 +58,7 @@ After testing with hardhat, the contract was deployed to the Polygon Mumbai netw
 <br /><br />
 
 <h2>🎨 Architecture</h2>
-<img src="https://github.com/Stray-Dogs-E1I3/KYC_Front-end/assets/89543695/1b16ffcb-ca75-461d-b8b4-057d4ce9b19f" width="550px" height="350px" />
+<img src="https://github.com/Stray-Dogs-E1I3/KYC_Back_End/assets/84958769/7c19f81d-5da5-4562-8ec7-da6cec4dac0c" width="550px" height="350px" />
 <br /><br />
 
 <h2>👨‍👨‍👦‍👦 Team - We are E1I3!</h2>
