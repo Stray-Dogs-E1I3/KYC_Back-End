@@ -27,6 +27,7 @@ import static e1.i3.e1i3.util.EthereumTimestampConverter.convertToDateTime;
 import static e1.i3.e1i3.util.createAuth.createToken;
 import static e1.i3.e1i3.util.gasToEtherConverter.convertGasToEther;
 import static e1.i3.e1i3.util.TnxMethod.getTnxMethod;
+import static e1.i3.e1i3.util.gasToEtherConverter.webhookGasToEther;
 
 @Service
 @Transactional
@@ -145,28 +146,30 @@ public class TransactionServiceImpl implements TransactionService {
         String protocol = rootNode.get("protocol").asText();
         JsonNode messageNode = eventNode.get("message");
         String userAddress = eventNode.get("targetAddress").asText();
+        String fromAddress = messageNode.get("from_address").asText();
 
-        if (messageNode != null) {
-            String transactionHash = messageNode.get("hash").asText();
-            String gasUsed = messageNode.get("receipt_gas_used").asText();
-            Long timestamp = messageNode.get("block_timestamp").asLong();
-            String tnxMethod = getTnxMethod(transactionHash,protocol);
+        if(userAddress.equals(fromAddress)) {
+            if (messageNode != null) {
+                String transactionHash = messageNode.get("hash").asText();
+                Double gasUsed = messageNode.get("receipt_gas_used").asDouble();
+                Long timestamp = messageNode.get("block_timestamp").asLong();
+                String tnxMethod = getTnxMethod(transactionHash, protocol);
 
 
-            Optional<Transaction> existingTransaction = transactionRepository.findByTransactionHash(transactionHash);
+                Optional<Transaction> existingTransaction = transactionRepository.findByTransactionHash(transactionHash);
 
-            if (existingTransaction.isEmpty()) {
-                Transaction transaction = new Transaction();
-                transaction.setGasUsed(convertGasToEther(gasUsed));
-                transaction.setTransactionHash(transactionHash);
-                transaction.setTimeStamp(convertToDateTime(timestamp));
-                transaction.setUserAddress(userAddress);
-                transaction.setMethod(tnxMethod);
-                transaction.setProtocol(protocol.toLowerCase());
-                transactionRepository.save(transaction);
+                if (existingTransaction.isEmpty()) {
+                    Transaction transaction = new Transaction();
+                    transaction.setGasUsed(webhookGasToEther(gasUsed));
+                    transaction.setTransactionHash(transactionHash);
+                    transaction.setTimeStamp(convertToDateTime(timestamp));
+                    transaction.setUserAddress(userAddress);
+                    transaction.setMethod(tnxMethod);
+                    transaction.setProtocol(protocol.toLowerCase());
+                    transactionRepository.save(transaction);
+                }
             }
         }
-
     }
 
     @Override

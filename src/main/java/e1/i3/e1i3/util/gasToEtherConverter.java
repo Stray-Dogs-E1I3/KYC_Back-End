@@ -15,4 +15,10 @@ public class gasToEtherConverter {
         return Double.parseDouble(decimalFormat.format(ether));
     }
 
+    public static double webhookGasToEther(Double gasUsed) {
+        gasUsed = gasUsed / 1000000000;
+        DecimalFormat decimalFormat = new DecimalFormat("#.#######"); // 소수점 이하 7자리까지 표시
+        return Double.parseDouble(decimalFormat.format(gasUsed));
+    }
+
 }
